@@ -253,6 +253,14 @@ class TestParser(unittest.TestCase):
         assert_equal(len(_fields), 1)
         assert_true(isinstance(_fields[0], fields.MultiSelect))
 
+    def test_parse_image_submit(self):
+        html = '''
+            <input type="image" name="image_submit" />
+        '''
+        _fields = _parse_fields(BeautifulSoup(html))
+        assert_equal(len(_fields), 1)
+        assert_true(isinstance(_fields[0], fields.ImageSubmit))
+
 
 class TestInput(unittest.TestCase):
 
@@ -613,6 +621,23 @@ class TestFileInput(unittest.TestCase):
         assert_equal(
             self.input.serialize(),
             {'song': file}
+        )
+
+
+
+class TestImageSubmit(unittest.TestCase):
+
+    def setUp(self):
+        self.html = '<input type="image" name="image_submit">'
+        self.input = fields.ImageSubmit(BeautifulSoup(self.html).find('input'))
+
+    def test_name(self):
+        assert_equal(self.input.name, 'image_submit')
+
+    def test_serialize(self):
+        assert_equal(
+            self.input.serialize(),
+            {'image_submit.x': '0', 'image_submit.y': '0'}
         )
 
 

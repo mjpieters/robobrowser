@@ -57,6 +57,11 @@ class Submit(Input):
     pass
 
 
+class ImageSubmit(Submit):
+    def serialize(self):
+        return {self.name + '.x': '0', self.name + '.y': '0'}
+
+
 class FileInput(BaseField):
 
     @BaseField.value.setter

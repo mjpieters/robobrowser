@@ -44,6 +44,8 @@ def _parse_field(tag, tags):
         tag_type = tag.get('type', '').lower()
         if tag_type == 'submit':
             return fields.Submit(tag)
+        if tag_type == 'image':
+            return fields.ImageSubmit(tag)
         if tag_type == 'file':
             return fields.FileInput(tag)
         if tag_type == 'radio':
